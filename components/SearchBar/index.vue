@@ -3,7 +3,7 @@
         <div class="flex flex-row bg-white p-2 rounded">
             <img src="#" alt="Search" class="ml-4">
 
-            <input type="text" placeholder="Search" />
+            <input data-testid="search-input" type="text" placeholder="Search" />
         </div>
 
         <div class="flex flex-row gap-4">
