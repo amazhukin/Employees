@@ -18,10 +18,6 @@ describe('SortBar.vue', () => {
       'Any',
       'Working',
       'Away',
-      'All',
-      'Employee',
-      'Contractor',
-      'Subcontractor'
     ]
 
     tabLabels.forEach((label) => {

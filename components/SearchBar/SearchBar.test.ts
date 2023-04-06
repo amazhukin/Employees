@@ -16,7 +16,6 @@ describe('SearchBar.vue', () => {
 
   it("renders the working search input", async () => {
     const input = wrapper.find('[data-testid="search-input"]');
-    console.log(input, ' [INPUT]')
     expect(input.exists()).toBe(true);
     expect(input.attributes('placeholder')).toBe('Search');
 
