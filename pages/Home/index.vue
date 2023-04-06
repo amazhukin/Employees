@@ -1,5 +1,8 @@
 <template>
-    <div>
-        <h1>Welcome to the Home Page</h1>
-    </div>
+  <NavMain />
+  <NavSecondary />
+
+  <div>
+    <span>EMPLOYEE COUNT SHOULD BE HERE</span>
+  </div>
 </template>
