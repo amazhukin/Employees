@@ -12,7 +12,7 @@ const handleDelete = () => {
 
 const handleClose = () => {
   // NOT WORKING CURRENTLY
-  handleEmployeeClick();
+  // handleEmployeeClick();
 };
 
 </script>
