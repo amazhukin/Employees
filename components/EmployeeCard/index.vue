@@ -1,13 +1,18 @@
 <script setup>
-const props = defineProps(['employeeData']);
+const props = defineProps(["employeeData"]);
 </script>
 
 <template>
-  <div class="flex flex-col items-center border rounded-md p-4 pb-6 cursor-pointer">
+  <div
+    class="flex flex-col items-center border rounded-md p-4 pb-6 cursor-pointer"
+    @click="$emit('handleEmployeeClick', props.employeeData)"
+  >
     <div class="w-full">
       <!-- TODO: OPTIONS -->
-      <div class="flex items-center justify-center ml-auto mb-2 w-6 h-6 rounded-full cursor-pointer">
-        <img width="24" src="../../assets/icons/options.png" alt="">
+      <div
+        class="flex items-center justify-center ml-auto mb-2 w-6 h-6 rounded-full cursor-pointer"
+      >
+        <img width="24" src="../../assets/icons/options.png" alt="" />
       </div>
     </div>
 
