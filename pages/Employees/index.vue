@@ -1,12 +1,45 @@
+<script setup>
+let dummyData = [
+  {
+    id: 0,
+    employee_name: "Avad Mussa",
+    employee_position: "Software Engineer of 2nd Category",
+  },
+  {
+    id: 1,
+    employee_name: "Avad Mussa",
+    employee_position: "Software Engineer of 2nd Category",
+  },
+  {
+    id: 2,
+    employee_name: "Avad Mussa",
+    employee_position: "Software Engineer of 2nd Category",
+  },
+  {
+    id: 3,
+    employee_name: "Avad Mussa",
+    employee_position: "Software Engineer of 2nd Category",
+  },
+  {
+    id: 4,
+    employee_name: "Avad Mussa",
+    employee_position: "Software Engineer of 2nd Category",
+  },
+];
+
+let employeeArr = useState("employeeArr", () => dummyData);
+</script>
+
 <template>
-    <h1>Employees Page</h1>
+  <SearchBar />
 
-    <!-- Upper Filter/Navigation -->
-    <!-- Lower Filter/Navigation -->
+  <SortBar />
 
-    <Employee />
-    <!-- Employee Cards -->
-
-    <EmployeeCard />
-
+  <div class="flex flex-row flex-wrap justify-center gap-4 w-full mt-8">
+    <EmployeeCard
+      v-for="(employee, x) in employeeArr"
+      :employeeData="employee"
+      :key="x"
+    />
+  </div>
 </template>

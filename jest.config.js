@@ -16,5 +16,8 @@ module.exports = {
   },
   transformIgnorePatterns: [
     "node_modules/(?!(nuxt3|unenv))",
-  ]
+  ],
+  testEnvironmentOptions: {
+    customExportConditions: ["node", "node-addons"],
+ },
 };
