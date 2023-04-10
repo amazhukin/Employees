@@ -1,4 +1,4 @@
-import { VueWrapper, mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import EmployeeCard from './index.vue'
 
 let wrapper: any;
