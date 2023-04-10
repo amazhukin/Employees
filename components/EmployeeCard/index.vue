@@ -4,7 +4,7 @@ const props = defineProps(["employeeData"]);
 
 <template>
   <div
-    class="flex flex-col items-center border rounded-md p-4 pb-6 cursor-pointer"
+    class="flex flex-col w-80 items-center border rounded-md p-4 pb-6 cursor-pointer"
     @click="$emit('handleEmployeeClick', props.employeeData)"
   >
     <div class="w-full">

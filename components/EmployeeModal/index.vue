@@ -17,7 +17,7 @@ const handleSubmit = () => {
     open
     class="flex items-center justify-center fixed top-0 left-0 w-screen h-screen bg-gray-600 bg-opacity-30"
   >
-    <div class="flex flex-col relative items-center p-8 rounded-lg bg-white">
+    <div class="flex flex-col relative w-80 items-center p-8 rounded-lg bg-white">
       <button
         @click="handleClose"
         class="absolute top-2 right-2 cursor-pointer"
@@ -29,7 +29,7 @@ const handleSubmit = () => {
       <img
         class="mt-4 rounded-full w-32"
         data-testid="employee-modal-image"
-        :src="employeeData.employee_image"
+        src="https://i.pravatar.cc/64"
         alt=""
       />
 

@@ -1,4 +1,8 @@
 <script setup>
+import { useEmployeeStore } from "@/store/employeeStore";
+
+const employeeStore = useEmployeeStore();
+
 let dummyData = [
   {
     id: 0,
@@ -91,7 +95,7 @@ const initialEmployee = {
   employee_age: -1,
 };
 
-const employeeArr = ref(dummyData);
+// const employeeArr = ref(employeeStore.items);
 const employeeModalOpen = ref(false);
 const chosenEmployee = reactive(initialEmployee);
 
@@ -114,7 +118,7 @@ const handleModalClose = () => {
 
   <div class="flex flex-row flex-wrap justify-center gap-4 w-full mt-8">
     <EmployeeCard
-      v-for="(employee, x) in employeeArr"
+      v-for="(employee, x) in employeeStore.items"
       :employeeData="employee"
       @handleEmployeeClick="handleEmployeeClick"
       :key="x"
