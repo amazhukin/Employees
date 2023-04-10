@@ -25,6 +25,9 @@
   },
   "dependencies": {
     "@nuxtjs/tailwindcss": "6.1.3",
-    "jest-environment-jsdom": "^29.5.0"
+    "@pinia/nuxt": "^0.4.8",
+    "axios": "^1.3.5",
+    "jest-environment-jsdom": "^29.5.0",
+    "pinia": "^2.0.34"
   }
 }
