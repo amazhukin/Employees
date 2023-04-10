@@ -1,20 +1,15 @@
 <script setup>
-const props = defineProps(["employeeData", "handleEmployeeClick"]);
-const editable = useState('editable', () => false);
-
-const handleSave = () => {
-  editable.value = false;
-};
+import { ref } from "vue";
+const props = defineProps(["employeeData", "handleClose"]);
+const editable = ref(false);
 
 const handleDelete = () => {
   // TODO: Handle Delete Method
 };
 
-const handleClose = () => {
-  // NOT WORKING CURRENTLY
-  // handleEmployeeClick();
+const handleSubmit = () => {
+  editable.value = !editable.value;
 };
-
 </script>
 
 <template>
@@ -23,9 +18,12 @@ const handleClose = () => {
     class="flex items-center justify-center fixed top-0 left-0 w-screen h-screen bg-gray-600 bg-opacity-30"
   >
     <div class="flex flex-col relative items-center p-8 rounded-lg bg-white">
-      <button @click="handleClose" class="absolute top-2 right-2 cursor-pointer">
+      <button
+        @click="handleClose"
+        class="absolute top-2 right-2 cursor-pointer"
+      >
         <!-- TODO: Close Button -->
-        <img width="32" height="32" src="~/assets/icons/close.png" alt="" />
+        <img width="32" height="32" src="../../assets/icons/close.png" alt="" />
       </button>
 
       <img
@@ -53,7 +51,7 @@ const handleClose = () => {
 
       <!-- Action Buttons -->
       <div class="flex flex-row justify-between w-full mt-6">
-        <button @click="editable ? handleSave() : (editable = true)">{{editable ? 'Save' : 'Edit'}}</button>
+        <button @click="handleSubmit">{{ editable ? "Save" : "Edit" }}</button>
         <button>Delete</button>
       </div>
     </div>

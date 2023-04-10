@@ -82,15 +82,28 @@ let dummyData = [
   },
 ];
 
-const employeeArr = useState("employeeArr", () => []);
-const clickedEmployee = useState("clickedEmployee", () => null);
+const initialEmployee = {
+  id: -1,
+  employee_image: "",
+  employee_name: "",
+  employee_position: "",
+  employee_salary: -1,
+  employee_age: -1,
+};
 
-employeeArr.value = dummyData;
+const employeeArr = ref(dummyData);
+const employeeModalOpen = ref(false);
+const chosenEmployee = reactive(initialEmployee);
 
 const handleEmployeeClick = (employee) => {
-  clickedEmployee.value = employee;
+  if (!employeeModalOpen.value) employeeModalOpen.value = true;
 
-  console.log(clickedEmployee, " [CLICKED EMPLOYEE]");
+  chosenEmployee.value = employee;
+};
+
+const handleModalClose = () => {
+  employeeModalOpen.value = false;
+  chosenEmployee.value = initialEmployee;
 };
 </script>
 
@@ -108,8 +121,8 @@ const handleEmployeeClick = (employee) => {
     />
   </div>
   <EmployeeModal
-    v-if="clickedEmployee"
-    :employeeData="clickedEmployee"
-    @click="handleEmployeeClick"
+    v-if="employeeModalOpen"
+    :employeeData="chosenEmployee.value"
+    :handleClose="handleModalClose"
   />
 </template>
