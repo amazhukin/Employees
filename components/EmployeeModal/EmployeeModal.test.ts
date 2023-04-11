@@ -1,12 +1,12 @@
 import { mount } from '@vue/test-utils'
-import EmployeeCard from './index.vue'
+import EmployeeModal from './index.vue'
 
 let wrapper: any;
 
-describe('EmployeeCard.vue', () => {
+describe('EmployeeModal.vue', () => {
 
   beforeEach(() => {
-    wrapper = mount(EmployeeCard, {
+    wrapper = mount(EmployeeModal, {
       props: {
         employeeData: {
           id: 0,
@@ -25,7 +25,7 @@ describe('EmployeeCard.vue', () => {
   })
 
 
-  it("renders the important details", async () => {
+  it("renders the important details", () => {
     const employeeImage = wrapper.find('[data-testid="employee-modal-image"]');
     const employeeName = wrapper.find('[data-testid="employee-modal-name"]');
     const employeePosition = wrapper.find('[data-testid="employee-modal-position"]')

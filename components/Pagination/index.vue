@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted, watch } from "vue";
 const props = defineProps(["items", "callback"]);
 
 const currentPage = ref(1);
@@ -12,7 +12,7 @@ onMounted(() => {
 
 watch(currentPage, (newValue, oldValue) => {
   props.callback(
-    props.items.slice(currentPage.value - 1, currentPage.value + 4)
+    props.items.slice((newValue - 1) * 5, (newValue - 1) * 5 + 5)
   );
 });
 
@@ -73,7 +73,9 @@ const handleMapPageNums = () => {
 
     <div
       v-for="pageNum in pages"
+      :key="`page-key-${pageNum}`"
       class="cursor-pointer"
+      :data-testid="`page-id-${pageNum}`"
       :class="{ 'text-red-500': pageNum === currentPage }"
       @click="currentPage = pageNum"
     >
