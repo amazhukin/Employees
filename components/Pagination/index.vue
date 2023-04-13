@@ -2,12 +2,13 @@
 import { ref, onMounted, watch } from "vue";
 const props = defineProps(["items", "callback"]);
 
-const currentPage = ref(1);
+const currentPage = ref();
 const pages = ref();
 
 onMounted(() => {
   handleMapPageNums();
   handlePagination("FIRST");
+  currentPage.value = 1;
 });
 
 watch(currentPage, (newValue, oldValue) => {

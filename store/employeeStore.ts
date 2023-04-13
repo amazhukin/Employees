@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
+import { getDummyEmployees } from '~/utils/employeeData';
+
 export interface IEmployee {
   id: number,
-  employee_image: string,
   employee_name: string,
   employee_position: string,
   employee_salary: number,
@@ -11,12 +12,16 @@ export interface IEmployee {
 }
 
 export interface IEmployeeState {
-  items: IEmployee[]
+  items: IEmployee[],
+  imageItems: {
+    url: string
+  }[]
 }
 
 export const useEmployeeStore = defineStore("employeeStore", {
   state: (): IEmployeeState => ({
     items: [],
+    imageItems: []
   }),
   getters: {
     getById: (state: IEmployeeState) => (id: number) => {
@@ -27,10 +32,41 @@ export const useEmployeeStore = defineStore("employeeStore", {
     }
   },
   actions: {
+    async dummyFetchEmployees() {
+      try {
+        const response = await getDummyEmployees();
+        this.items = response;
+
+        const query = gql`
+        query {
+          images(limit: 35) {
+            url
+          }
+        }
+        `
+
+        const { data } = await useAsyncQuery(query);
+        console.log(data, '[GraphQL DATA]');
+      } catch (error) {
+        console.error(error)
+      }
+    },
     async fetchEmployees() {
       try {
         const response = await axios.get('https://dummy.restapiexample.com/api/v1/employees');
         this.items = response.data.data;
+        // TODO: Add GraphQL Get Images
+
+        const query = gql`
+        query {
+          images(limit: 35) {
+            url
+          }
+        }
+        `
+
+        const { data } = await useAsyncQuery(query);
+        console.log(data, ' [GRAPHQL DATA]');
       } catch (error) {
         console.error(error);
       }
