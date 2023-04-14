@@ -8,8 +8,8 @@ export default defineNuxtConfig({
   apollo: {
     clients: {
       default: {
-        httpEndpoint: 'https://api.thecatapi.com/v1/images/search?api_key=evQSuoGhGjbNpmJWKj2kKfk2shCIEgSbibqUQ2YhEzjdkmFYZkMKm6vUQdTp2dwy'
+        httpEndpoint: 'https://rickandmortyapi.com/graphql/',
       }
     },
   },
-})
+});

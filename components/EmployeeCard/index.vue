@@ -17,9 +17,9 @@ const props = defineProps(["employeeData"]);
     </div>
 
     <img
-      class="rounded-full border mb-4"
+      class="rounded-full border mb-4 w-20"
       data-testid="employee-card-image"
-      src="https://i.pravatar.cc/64"
+      :src="employeeData.employee_image"
       alt=""
     />
 
