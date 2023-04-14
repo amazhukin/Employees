@@ -5,6 +5,7 @@ import { getDummyEmployees } from '~/utils/employeeData';
 
 export interface IEmployee {
   id: number,
+  employee_image: string,
   employee_name: string,
   employee_position: string,
   employee_salary: number,
@@ -35,38 +36,41 @@ export const useEmployeeStore = defineStore("employeeStore", {
     async dummyFetchEmployees() {
       try {
         const response = await getDummyEmployees();
-        this.items = response;
-
         const query = gql`
-        query {
-          images(limit: 35) {
-            url
+          query getCharacters {
+            characters {
+              results {
+                image
+              }
+            }
           }
-        }
-        `
+        `;
 
-        const { data } = await useAsyncQuery(query);
-        console.log(data, '[GraphQL DATA]');
+        const { data }: any = await useAsyncQuery(query);
+        response.forEach((employee, x) => employee.employee_image = data.value.characters.results[x].image)
+
+        this.items = response;
       } catch (error) {
         console.error(error)
       }
     },
     async fetchEmployees() {
       try {
-        const response = await axios.get('https://dummy.restapiexample.com/api/v1/employees');
-        this.items = response.data.data;
-        // TODO: Add GraphQL Get Images
-
+        const response = await axios.get('https://dummy.restapiexample.com/api/v1/employees') as IEmployee[];
         const query = gql`
-        query {
-          images(limit: 35) {
-            url
+          query getCharacters {
+            characters {
+              results {
+                image
+              }
+            }
           }
-        }
-        `
+        `;
 
-        const { data } = await useAsyncQuery(query);
-        console.log(data, ' [GRAPHQL DATA]');
+        const { data }: any = await useAsyncQuery(query);
+        response.forEach((employee: IEmployee, x: number) => employee.employee_image = data.value.characters.results[x].image)
+
+        this.items = response;
       } catch (error) {
         console.error(error);
       }

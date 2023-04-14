@@ -29,7 +29,7 @@ const handleSubmit = () => {
       <img
         class="mt-4 rounded-full w-32"
         data-testid="employee-modal-image"
-        src="https://i.pravatar.cc/64"
+        :src="employeeData.employee_image"
         alt=""
       />
 

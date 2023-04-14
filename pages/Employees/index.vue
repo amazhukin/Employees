@@ -46,7 +46,11 @@ const handlePaginationChange = (newItems) => {
     />
   </div>
 
-  <Pagination v-if="employeeStore.items.length > 0" :items="employeeStore.items" :callback="handlePaginationChange" />
+  <Pagination
+    v-if="employeeStore.items.length > 0"
+    :items="employeeStore.items"
+    :callback="handlePaginationChange"
+  />
 
   <EmployeeModal
     v-if="employeeModalOpen"
