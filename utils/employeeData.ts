@@ -1,4 +1,7 @@
-import { IEmployee } from "~/store/employeeStore";
+import { IEmployee, useEmployeeStore } from "~/store/employeeStore";
+
+const employeeStore = useEmployeeStore();
+
 let dummyEmployees = [
   {
     "id": 0,
@@ -172,7 +175,16 @@ function getDummyEmployees(): Promise<IEmployee[]> {
   });
 };
 
+function filterEmployees(filterQueue: string): IEmployee[] {
+  let filteredItems = employeeStore.items.filter((item) =>
+      item.employee_name.toLowerCase().includes(filterQueue.toLowerCase())
+    );
+    employeeStore.setFilters(filteredItems);
+  return []
+}
+
 export {
   dummyEmployees,
-  getDummyEmployees
+  getDummyEmployees,
+  filterEmployees
 }

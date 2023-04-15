@@ -14,6 +14,7 @@ export interface IEmployee {
 
 export interface IEmployeeState {
   items: IEmployee[],
+  filteredItems: IEmployee[],
   imageItems: {
     url: string
   }[]
@@ -22,6 +23,7 @@ export interface IEmployeeState {
 export const useEmployeeStore = defineStore("employeeStore", {
   state: (): IEmployeeState => ({
     items: [],
+    filteredItems: [],
     imageItems: []
   }),
   getters: {
@@ -33,6 +35,9 @@ export const useEmployeeStore = defineStore("employeeStore", {
     }
   },
   actions: {
+    setFilters(filteredItems: IEmployee[]) {
+      this.filteredItems = filteredItems;
+    },
     async dummyFetchEmployees() {
       try {
         const response = await getDummyEmployees();
@@ -47,9 +52,13 @@ export const useEmployeeStore = defineStore("employeeStore", {
         `;
 
         const { data }: any = await useAsyncQuery(query);
+        const route = useRoute();
+
         response.forEach((employee, x) => employee.employee_image = data.value.characters.results[x].image)
 
         this.items = response;
+        
+        this.filteredItems = response;
       } catch (error) {
         console.error(error)
       }
@@ -71,6 +80,8 @@ export const useEmployeeStore = defineStore("employeeStore", {
         response.forEach((employee: IEmployee, x: number) => employee.employee_image = data.value.characters.results[x].image)
 
         this.items = response;
+        
+        this.filteredItems = response;
       } catch (error) {
         console.error(error);
       }
