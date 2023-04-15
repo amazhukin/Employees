@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-import { getDummyEmployees } from '~/utils/employeeData';
+import { getDummyEmployees } from '../utils/employeeData';
 
 export interface IEmployee {
   id: number,

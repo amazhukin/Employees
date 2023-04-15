@@ -11,6 +11,7 @@ describe('EmployeeCard.vue', () => {
         employeeData: {
           id: 0,
           employee_name: "Jhon Doe",
+          employee_image: "https://picsum.photos/80/80",
           employee_position: "Senior Engineer of 1st Category",
         },
       }
