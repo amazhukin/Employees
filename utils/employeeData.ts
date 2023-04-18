@@ -1,8 +1,8 @@
-import { IEmployee, useEmployeeStore } from "~/store/employeeStore";
+import { IEmployee } from "~/store/employeeStore";
 
-const employeeStore = useEmployeeStore();
+// const employeeStore = useEmployeeStore();
 
-let dummyEmployees = [
+const dummyEmployees = [
   {
     "id": 0,
     "employee_image": "",
@@ -175,16 +175,15 @@ function getDummyEmployees(): Promise<IEmployee[]> {
   });
 };
 
-function filterEmployees(filterQueue: string): IEmployee[] {
-  let filteredItems = employeeStore.items.filter((item) =>
-      item.employee_name.toLowerCase().includes(filterQueue.toLowerCase())
-    );
-    employeeStore.setFilters(filteredItems);
-  return []
-}
+// function filterEmployees(filterQueue: string, items: IEmployee[]): IEmployee[] {
+//   let filteredItems = items.filter((item) =>
+//       item.employee_name.toLowerCase().includes(filterQueue.toLowerCase())
+//     );
+//     employeeStore.setFilters(filteredItems);
+//   return []
+// }
 
 export {
-  dummyEmployees,
   getDummyEmployees,
   filterEmployees
 }

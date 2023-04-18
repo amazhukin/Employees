@@ -1,6 +1,6 @@
 <script setup>
 import { useEmployeeStore } from "@/store/employeeStore";
-import { filterEmployees } from "../../utils/employeeData";
+// import { filterEmployees } from "../../utils/employeeData";
 import { mount } from "@vue/test-utils";
 import { useRouter, useRoute } from "vue-router";
 const employeeStore = useEmployeeStore();
@@ -23,21 +23,45 @@ const router = useRouter();
 const route = useRoute();
 
 onMounted(() => {
-  const filter = route.query.fullName;
-  if (filter) {
-    console.log(filter)
-    existingFilter.value = filter;
-    handleFilterItems(filter);
-  }
+  employeeStore.$subscribe((mutation, state) => {
+    const filter = route.query.fullName;
+    const employeeID = route.query.chosenEmployee;
+    
+    if (filter) {
+      existingFilter.value = filter;
+      handleFilterItems(filter);
+    }
+
+    if (employeeID) {
+      const employeeData = employeeStore.getById(JSON.parse(employeeID));
+      chosenEmployee.value = employeeData;
+      employeeModalOpen.value = true;
+    }
+  });
 });
 
 const handleEmployeeClick = (employee) => {
-  if (!employeeModalOpen.value) employeeModalOpen.value = true;
+  employeeModalOpen.value = true;
 
   chosenEmployee.value = employee;
+
+  router.push({
+    path: "/employees",
+    query: {
+      ...route.query,
+      chosenEmployee: employee.id,
+    },
+  });
 };
 
 const handleModalClose = () => {
+  const { chosenEmployee, ...query } = route.query;
+
+  router.push({
+    path: "/employees",
+    query,
+  });
+
   employeeModalOpen.value = false;
   chosenEmployee.value = initialEmployee;
 };
@@ -47,28 +71,33 @@ const handlePaginationChange = (newItems) => {
 };
 
 const handleSearchParam = (event) => {
+  const { fullName, ...query } = route.query;
+
   var timer = 0;
   clearTimeout(timer);
 
   timer = setTimeout(() => {
     router.push({
       path: "/employees",
-      query: {
-        fullName: event.target.value,
-      },
+      query:
+        event.target.value.length === 0
+          ? query
+          : {
+              ...route.query,
+              fullName: event.target.value,
+            },
     });
 
     handleFilterItems(event.target.value);
   }, 1500);
 };
 
-// const handleFilterItems = (filterQueue) => {
-//   let filteredItems = employeeStore.items.filter((item) =>
-//       item.employee_name.toLowerCase().includes(filterQueue.toLowerCase())
-//     );
-//     console.log(employeeStore.items, '[QUEE]')
-//     employeeStore.setFilters(filteredItems);
-// };
+const handleFilterItems = (filterQueue) => {
+  let filteredItems = employeeStore.items.filter((item) =>
+    item.employee_name.toLowerCase().includes(filterQueue.toLowerCase())
+  );
+  employeeStore.setFilters(filteredItems);
+};
 </script>
 
 <template>

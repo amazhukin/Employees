@@ -1,38 +1,40 @@
-import { defineStore } from 'pinia';
-import axios from 'axios';
+import { defineStore } from "pinia";
+import axios from "axios";
 
-import { getDummyEmployees } from '../utils/employeeData';
+import { getDummyEmployees } from "../utils/employeeData";
 
 export interface IEmployee {
-  id: number,
-  employee_image: string,
-  employee_name: string,
-  employee_position: string,
-  employee_salary: number,
-  employee_age: number,
+  id: number;
+  employee_image: string;
+  employee_name: string;
+  employee_position: string;
+  employee_salary: number;
+  employee_age: number;
 }
 
 export interface IEmployeeState {
-  items: IEmployee[],
-  filteredItems: IEmployee[],
+  items: IEmployee[];
+  filteredItems: IEmployee[];
   imageItems: {
-    url: string
-  }[]
+    url: string;
+  }[];
 }
 
 export const useEmployeeStore = defineStore("employeeStore", {
   state: (): IEmployeeState => ({
     items: [],
     filteredItems: [],
-    imageItems: []
+    imageItems: [],
   }),
   getters: {
-    getById: (state: IEmployeeState) => (id: number) => {
-      return state.items.find(item => item.id === id);
+    getById: (state: IEmployeeState) => (employeeID: number) => {
+      return state.items.find((item) => item.id === employeeID);
     },
     getByName: (state: IEmployeeState) => (employee_name: string) => {
-      return state.items.find(item => item.employee_name.includes(employee_name))
-    }
+      return state.items.find((item) =>
+        item.employee_name.includes(employee_name)
+      );
+    },
   },
   actions: {
     setFilters(filteredItems: IEmployee[]) {
@@ -54,18 +56,23 @@ export const useEmployeeStore = defineStore("employeeStore", {
         const { data }: any = await useAsyncQuery(query);
         const route = useRoute();
 
-        response.forEach((employee, x) => employee.employee_image = data.value.characters.results[x].image)
+        response.forEach(
+          (employee, x) =>
+            (employee.employee_image = data.value.characters.results[x].image)
+        );
 
         this.items = response;
-        
+
         this.filteredItems = response;
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     },
     async fetchEmployees() {
       try {
-        const response = await axios.get('https://dummy.restapiexample.com/api/v1/employees') as IEmployee[];
+        const response = (await axios.get(
+          "https://dummy.restapiexample.com/api/v1/employees"
+        )) as IEmployee[];
         const query = gql`
           query getCharacters {
             characters {
@@ -77,10 +84,13 @@ export const useEmployeeStore = defineStore("employeeStore", {
         `;
 
         const { data }: any = await useAsyncQuery(query);
-        response.forEach((employee: IEmployee, x: number) => employee.employee_image = data.value.characters.results[x].image)
+        response.forEach(
+          (employee: IEmployee, x: number) =>
+            (employee.employee_image = data.value.characters.results[x].image)
+        );
 
         this.items = response;
-        
+
         this.filteredItems = response;
       } catch (error) {
         console.error(error);
@@ -88,7 +98,10 @@ export const useEmployeeStore = defineStore("employeeStore", {
     },
     async addEmployee(employee: IEmployee) {
       try {
-        const response = await axios.post('https://dummy.restapiexample.com/api/v1/create', employee);
+        const response = await axios.post(
+          "https://dummy.restapiexample.com/api/v1/create",
+          employee
+        );
         this.items.push(response.data);
       } catch (error) {
         console.error(error);
@@ -96,8 +109,13 @@ export const useEmployeeStore = defineStore("employeeStore", {
     },
     async updateEmployee(employee: IEmployee) {
       try {
-        const response = await axios.put(`https://dummy.restapiexample.com/api/v1/update/${employee.id}`, employee);
-        const index = this.items.findIndex((item: IEmployee) => item.id === employee.id);
+        const response = await axios.put(
+          `https://dummy.restapiexample.com/api/v1/update/${employee.id}`,
+          employee
+        );
+        const index = this.items.findIndex(
+          (item: IEmployee) => item.id === employee.id
+        );
         if (index !== -1) {
           this.items.splice(index, 1, response.data);
         }
@@ -107,7 +125,9 @@ export const useEmployeeStore = defineStore("employeeStore", {
     },
     async deleteEmployee(id: number) {
       try {
-        await axios.delete(`https://dummy.restapiexample.com/api/v1/delete/${id}`);
+        await axios.delete(
+          `https://dummy.restapiexample.com/api/v1/delete/${id}`
+        );
         const index = this.items.findIndex((item: IEmployee) => item.id === id);
         if (index !== -1) {
           this.items.splice(index, 1);
@@ -116,5 +136,5 @@ export const useEmployeeStore = defineStore("employeeStore", {
         console.error(error);
       }
     },
-  }
+  },
 });
