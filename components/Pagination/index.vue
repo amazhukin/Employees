@@ -6,6 +6,7 @@ const props = defineProps(["items", "callback"]);
 const employeeStore = useEmployeeStore();
 
 const currentPage = ref(1);
+
 const pages = ref();
 
 employeeStore.$subscribe((mutation, state) => {
