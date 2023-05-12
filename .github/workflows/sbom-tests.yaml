@@ -1,0 +1,20 @@
+name: SBOM Tests
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Create SBOM
+        uses: SecureStackCo/actions-sbom@v0.1.2
+        with:
+          securestack_api_key: ${{ secrets.SECURESTACK_API_KEY }}
+          securestack_app_id: ${{ secrets.SECURESTACK_APP_ID }}
+          severity: low
