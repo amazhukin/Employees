@@ -1,24 +1,37 @@
 <script setup lang="ts">
+import { useEmployeeStore } from "~/store/employeeStore";
 import { ref, onMounted, watch } from "vue";
 const props = defineProps(["items", "callback"]);
 
-const currentPage = ref();
+const employeeStore = useEmployeeStore();
+
+const currentPage = ref(1);
+
 const pages = ref();
+
+employeeStore.$subscribe((mutation, state) => {
+  handlePagination("FIRST");
+  handleMapPageNums();
+  handleSetPageItems(1);
+});
 
 onMounted(() => {
   handleMapPageNums();
-  handlePagination("FIRST");
-  currentPage.value = 1;
+  handleSetPageItems(1);
 });
 
 watch(currentPage, (newValue, oldValue) => {
-  props.callback(
-    props.items.slice((newValue - 1) * 5, (newValue - 1) * 5 + 5)
-  );
+  handleSetPageItems(newValue);
 });
 
+const handleSetPageItems = (page: number) => {
+  props.callback(
+    employeeStore.filteredItems.slice((page - 1) * 5, (page - 1) * 5 + 5)
+  );
+};
+
 const handlePagination = (ACTION_TYPE: string) => {
-  let pagesCount = Math.ceil(props.items.length / 5);
+  let pagesCount = Math.ceil(employeeStore.filteredItems.length / 5);
 
   switch (ACTION_TYPE) {
     case "FIRST":
@@ -42,7 +55,7 @@ const handlePagination = (ACTION_TYPE: string) => {
 };
 
 const handleMapPageNums = () => {
-  let count = Math.ceil(props.items.length / 5);
+  let count = Math.ceil(employeeStore.filteredItems.length / 5);
   let startPage = 1;
   let paginationLength = count >= 10 ? 10 : count;
 
