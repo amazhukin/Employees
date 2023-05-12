@@ -36,3 +36,8 @@ Locally preview production build:
 ```bash
 npm run preview
 ```
+
+
+[![SBOM Tests](https://github.com/amazhukin/Employees/actions/workflows/sbom-tests.yaml/badge.svg)](https://github.com/amazhukin/Employees/actions/workflows/sbom-tests.yaml)
+[![SBOM Generator](https://github.com/amazhukin/Employees/actions/workflows/sbom-tests2.yaml/badge.svg)](https://github.com/amazhukin/Employees/actions/workflows/sbom-tests2.yaml)
+[![Unit Tests](https://github.com/amazhukin/Employees/actions/workflows/unit-tests.yaml/badge.svg)](https://github.com/amazhukin/Employees/actions/workflows/unit-tests.yaml)
